@@ -23,8 +23,6 @@ uint32 FHexsysCharacterAssetTypeAction::GetCategories()
 	return EAssetTypeCategories::Misc;
 }
 
-
-
 void FHexsysCharacterAssetTypeAction::OpenAssetEditor(const TArray<UObject*>& InObjects,
                                                       TSharedPtr<class IToolkitHost> EditWithinLevelEditor)
 {

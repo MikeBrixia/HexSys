@@ -30,11 +30,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, meta=(DeterminesOutputType="Type"))
-	FORCEINLINE UHexsysSystem* GetCharacterTrait(FName TraitName, TSubclassOf<UHexsysSystem> Type) const
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE UHexsysSystem* GetCharacterTrait(FName TraitName) const
 	{
 		UHexsysSystem* const* System = Systems.Find(TraitName);
-		UE_LOG(LogTemp, Display, TEXT("%s"), System != nullptr? TEXT("True") : TEXT("False"))
 		if(System != nullptr)
 		     return *System;
 		else
