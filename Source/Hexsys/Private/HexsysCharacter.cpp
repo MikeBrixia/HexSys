@@ -4,25 +4,27 @@
 
 void UHexsysCharacter::ChangeCharacterQuality(FHexsysQuality NewQuality, FName OldQuality)
 {
-	// Remove old quality from this character.
+	// Remove the quality we want to change from this asset.
 	Qualities.Remove(OldQuality);
-	// Add the new quality .
+	// Add the new quality to asset and map it to HexSys sheet.
 	Qualities.Add(NewQuality.TraitName, NewQuality);
-	// Map this quality to the HexSys sheet.
 	SheetMappedHexagons.Add(NewQuality.Index, NewQuality);
 }
 
 void UHexsysCharacter::AddQuality(FHexsysQuality NewQuality, int Index)
 {
+	// Map quality to HexSys sheet and add it to this asset.
 	SheetMappedHexagons.Add(Index, NewQuality);
 	Qualities.Add(NewQuality.TraitName, NewQuality);
 }
 
 void UHexsysCharacter::RemoveQuality(FName Quality)
 {
+	// Find the quality we want to remove
 	const FHexsysQuality* _Quality = Qualities.Find(Quality);
 	if(_Quality != nullptr)
 	{
+		// Remove quality from asset.
 		SheetMappedHexagons.Remove(_Quality->Index);
 		Qualities.Remove(Quality);
 	}
@@ -30,11 +32,15 @@ void UHexsysCharacter::RemoveQuality(FName Quality)
 
 FHexsysAbility UHexsysCharacter::GetCharacterAbility(const FName Quality, const FName Ability) const
 {
+	// Parent Quality of the ability we are searching for.
 	const FHexsysQuality* _Quality = Qualities.Find(Quality);
+	// If no ability will be found, we're gonna return an empty ability(invalid ability).
 	FHexsysAbility Result = FHexsysAbility();
 	if(_Quality != nullptr)
 	{
+		// Ability we are searching for.
 		const FHexsysAbility* _Ability = _Quality->Abilities.Find(Ability);
+		// If we've found the ability set it as the result and return it.
 		if(_Ability != nullptr)
 			Result = *_Ability;
 	}
@@ -44,13 +50,17 @@ FHexsysAbility UHexsysCharacter::GetCharacterAbility(const FName Quality, const 
 void UHexsysCharacter::ChangeCharacterAbility(FHexsysAbility NewAbility, const TArray<FName> ParentQualities,
 	const FName OldAbility)
 {
+	// If there is at least one parent quality then map the new ability
+	// to the HexSys sheet.
 	if(ParentQualities.Num() > 0)
 		SheetMappedHexagons.Add(NewAbility.Index, NewAbility);
-	
+
+	// For each parent quality remove the old ability and replace it
+	// with the new one.
 	for(const FName& QualityName : ParentQualities)
 	{
 		FHexsysQuality* _Quality = Qualities.Find(QualityName);
-		if(_Quality != nullptr)
+		if(_Quality != nullptr) // Ensure that the quality we're searching for actually exists.
 		{
 			_Quality->Abilities.Remove(OldAbility);
 			_Quality->Abilities.Add(NewAbility.TraitName, NewAbility);
@@ -60,10 +70,12 @@ void UHexsysCharacter::ChangeCharacterAbility(FHexsysAbility NewAbility, const T
 
 void UHexsysCharacter::AddAbility(FHexsysAbility NewAbility, int Index, TArray<FName> ParentQualities)
 {
+	// For each parent quality map the new ability to an HexSys sheet and add it
+	// to the quality abilities.
 	for (const FName& Parent : ParentQualities)
 	{
 		FHexsysQuality* _Quality = Qualities.Find(Parent);
-		if(_Quality != nullptr)
+		if(_Quality != nullptr) // Ensure that the quality we're searching for actually exists.
 		{
 			SheetMappedHexagons.Add(Index, NewAbility);
 			_Quality->Abilities.Add(NewAbility.TraitName, NewAbility);
@@ -73,14 +85,16 @@ void UHexsysCharacter::AddAbility(FHexsysAbility NewAbility, int Index, TArray<F
 
 void UHexsysCharacter::RemoveAbility(FName Ability, TArray<FName> ParentQualities)
 {
+	// Remove the given ability from each of the parent qualities.
 	for(const FName& QualityName : ParentQualities)
 	{
 		FHexsysQuality* Quality = Qualities.Find(QualityName);
-		if(Quality != nullptr)
+		if(Quality != nullptr) // Ensure that the quality we're searching for actually exists.
 		{
 			const FHexsysAbility* _Ability = Quality->Abilities.Find(Ability);
-			if(_Ability != nullptr)
+			if(_Ability != nullptr) // Ensure that the ability we're searching for actually exists.
 			{
+				// Remove ability from sheet map and parent qualities.
 				SheetMappedHexagons.Remove(_Ability->Index);
 				Quality->Abilities.Remove(Ability);
 			}
@@ -90,6 +104,7 @@ void UHexsysCharacter::RemoveAbility(FName Ability, TArray<FName> ParentQualitie
 
 TArray<FHexsysQuality> UHexsysCharacter::GetCharacterQualities() const
 {
+	// Get all quality map values and return them.
 	TArray<FHexsysQuality> QualityList;
 	Qualities.GenerateValueArray(QualityList);
 	return QualityList;
@@ -97,12 +112,14 @@ TArray<FHexsysQuality> UHexsysCharacter::GetCharacterQualities() const
 
 void UHexsysCharacter::AddArchetype(FHexsysArchetype NewArchetype, int Index)
 {
+	// Set new archetype as the character archetype and map it to an HexSys sheet.
 	Archetype = NewArchetype;
 	SheetMappedHexagons.Add(Index, NewArchetype);
 }
 
 void UHexsysCharacter::RemoveArchetype()
 {
+	// Remove archetype from sheet map and empty the character archetype.
 	SheetMappedHexagons.Remove(0);
 	Archetype = FHexsysArchetype();
 }
