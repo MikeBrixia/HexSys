@@ -18,9 +18,19 @@ public:
 	// Sets default values for this component's properties
 	UHexsysSheetComponent();
 
+	// If true component will work with a copy of HexSys character instead of directly
+	// using the asset reference, meaning that all changes to the character should be saved manually.
+	// N.B. When false every change to the character will propagate
+	// to the original asset.
 	UPROPERTY(EditAnywhere)
-	UHexsysCharacter* CharacterAsset;
+	bool UseAssetCopy = true;
 	
+	UPROPERTY(EditAnywhere, meta=(EditCondition="UseAssetCopy", EditConditionHides))
+	TSoftObjectPtr<UHexsysCharacter> CharacterAsset;
+	
+	UPROPERTY(EditAnywhere, meta=(EditCondition="!UseAssetCopy", EditConditionHides))
+	UHexsysCharacter* Character;
+
 protected:
 	
 	// Called when the game starts
@@ -31,6 +41,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Get the given character trait. if trait could not be found will return nullptr(Invalid object).
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE UHexsysSystem* GetCharacterTrait(FName TraitName) const
 	{
@@ -41,26 +52,39 @@ public:
 			return nullptr;
 	}
 
-	UFUNCTION(BlueprintCallable)
+	// Add an archetype to this HexSys character. Returns true if archetype has been added, false otherwise.
+	// N.B. If archetype already exists then this function will return false and fail, if you want to change an existing
+	// archetype use 'ChangeArchetype' instead.
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool AddArchetype(UHexsysArchetypeSystem* Archetype);
 
-	UFUNCTION(BlueprintCallable)
+	// Change the archetype of this HexSys character with a new one. Returns true if archetype was changed, false otherwise
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool ChangeArchetype(UHexsysArchetypeSystem* Archetype);
 
-	UFUNCTION(BlueprintCallable)
+	// Add a quality to this HexSys character. Returns true if quality has been added, false otherwise.
+	// N.B. If quality already exists then this function will return false and fail, if you want to change an existing
+	// quality use 'ChangeQuality' instead.
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool AddQuality(UHexsysQualitySystem* Quality, int SheetIndex);
 
-	UFUNCTION(BlueprintCallable)
+	// Change a quality of this HexSys character with a new one. Returns true if quality was changed, false otherwise
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool ChangeQuality(UHexsysQualitySystem* Quality, const FName OldQuality);
 
-	UFUNCTION(BlueprintCallable)
+	// Add an ability to this HexSys character. Returns true if ability has been added, false otherwise.
+	// N.B. If the ability already exists then this function will return false and fail, if you want to change an existing
+	// ability use 'ChangeAbility' instead.
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool AddAbility(UHexsysAbilitySystem* Ability, int SheetIndex, const TArray<FName> ParentQualities);
 
-	UFUNCTION(BlueprintCallable)
+	// Change an ability of this HexSys character with a new one. Returns true if ability was changed, false otherwise
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool ChangeAbility(UHexsysAbilitySystem* Ability, const TArray<FName> ParentQualities, const FName OldAbility);
 	
 private:
-	
+
+	// Map used to store Hexsys systems, can be queried to get the desired system.
 	UPROPERTY()
 	TMap<FName, UHexsysSystem*> Systems;
 

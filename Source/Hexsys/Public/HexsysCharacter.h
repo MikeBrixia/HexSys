@@ -7,7 +7,7 @@
 #include "HexsysCharacter.generated.h"
 
 /**
- * 
+ * Asset which stores all informations about an HexSys character.
  */
 UCLASS(BlueprintType)
 class HEXSYS_API UHexsysCharacter : public UObject
@@ -26,13 +26,16 @@ private:
 
 public:
     
-	// Editor only TMap which maps the character to an HexSys sheet.
+	// Map the character to an HexSys sheet. This TMap can be used to build
+	// the HexSys sheet UI.
 	UPROPERTY(VisibleDefaultsOnly)
 	TMap<int, FHexsysHexagon> SheetMappedHexagons;
 
+	// Add a new archetype to this character.
 	UFUNCTION(BlueprintCallable)
 	void AddArchetype(FHexsysArchetype NewArchetype, int Index);
 
+	// Remove the current character archetype
 	UFUNCTION(BlueprintCallable)
 	void RemoveArchetype();
 	
@@ -55,7 +58,8 @@ public:
 	//Qualities describes the character personal traits.
 	UFUNCTION(BlueprintCallable)
 	FHexsysQuality GetCharacterQuality(FName QualityName) const;
-	
+
+	// Get all character abilities
 	UFUNCTION(BlueprintCallable)
 	TArray<FHexsysAbility> GetCharacterAbilities() const;
 	
@@ -64,9 +68,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ChangeCharacterQuality(FHexsysQuality NewQuality, FName OldQuality);
 
+	// Add a new quality to this hexsys character
 	UFUNCTION(BlueprintCallable)
 	void AddQuality(FHexsysQuality NewQuality, int Index);
 
+	// Remove given quality from this character
 	UFUNCTION(BlueprintCallable)
 	void RemoveQuality(FName Quality);
 	
@@ -80,13 +86,16 @@ public:
 	// Abilities can change overtime, becoming stronger or a different trait.
 	UFUNCTION(BlueprintCallable)
 	void ChangeCharacterAbility(FHexsysAbility NewAbility, const TArray<FName> ParentQualities, const FName OldAbility);
-	
+
+	// Add a new ability to this character
 	UFUNCTION(BlueprintCallable)
 	void AddAbility(FHexsysAbility NewAbility, int Index, TArray<FName> ParentQualities);
 
+	// Remove an ability from this character
 	UFUNCTION(BlueprintCallable)
 	void RemoveAbility(FName Ability, TArray<FName> ParentQualities);
-	
+
+	// Get all the character qualities.
 	UFUNCTION(BlueprintCallable)
 	TArray<FHexsysQuality> GetCharacterQualities() const;
 	

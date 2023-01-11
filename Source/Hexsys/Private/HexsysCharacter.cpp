@@ -4,8 +4,11 @@
 
 void UHexsysCharacter::ChangeCharacterQuality(FHexsysQuality NewQuality, FName OldQuality)
 {
+	// Remove old quality from this character.
 	Qualities.Remove(OldQuality);
+	// Add the new quality .
 	Qualities.Add(NewQuality.TraitName, NewQuality);
+	// Map this quality to the HexSys sheet.
 	SheetMappedHexagons.Add(NewQuality.Index, NewQuality);
 }
 
