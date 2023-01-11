@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "HexsysCharacter.h"
+#include "HexsysSystem.h"
 #include "Components/ActorComponent.h"
 #include "HexsysSheetComponent.generated.h"
 
@@ -39,10 +40,31 @@ public:
 		else
 			return nullptr;
 	}
+
+	UFUNCTION(BlueprintCallable)
+	bool AddArchetype(UHexsysArchetypeSystem* Archetype);
+
+	UFUNCTION(BlueprintCallable)
+	bool ChangeArchetype(UHexsysArchetypeSystem* Archetype);
+
+	UFUNCTION(BlueprintCallable)
+	bool AddQuality(UHexsysQualitySystem* Quality, int SheetIndex);
+
+	UFUNCTION(BlueprintCallable)
+	bool ChangeQuality(UHexsysQualitySystem* Quality, const FName OldQuality);
+
+	UFUNCTION(BlueprintCallable)
+	bool AddAbility(UHexsysAbilitySystem* Ability, int SheetIndex, const TArray<FName> ParentQualities);
+
+	UFUNCTION(BlueprintCallable)
+	bool ChangeAbility(UHexsysAbilitySystem* Ability, const TArray<FName> ParentQualities, const FName OldAbility);
 	
 private:
 	
 	UPROPERTY()
 	TMap<FName, UHexsysSystem*> Systems;
-	
+
+#if UE_EDITOR
+    void LogWarning(EHexagonType Type);
+#endif
 };

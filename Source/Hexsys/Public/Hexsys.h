@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(HexsysLog, Log, All);
+inline DEFINE_LOG_CATEGORY(HexsysLog)
+
 class FHexsysModule : public IModuleInterface
 {
 public:

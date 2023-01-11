@@ -37,7 +37,7 @@ class HEXSYS_API UHexsysArchetypeSystem : public UHexsysSystem
 	
 public:
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	FHexsysArchetype ArchetypeData;
 };
 
@@ -51,7 +51,7 @@ class HEXSYS_API UHexsysQualitySystem : public UHexsysSystem
 	
 public:
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	FHexsysQuality QualityData;
 };
 
@@ -65,7 +65,7 @@ class HEXSYS_API UHexsysAbilitySystem : public UHexsysSystem
 	
 public:
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	FHexsysAbility AbilityData;
 	
 };
