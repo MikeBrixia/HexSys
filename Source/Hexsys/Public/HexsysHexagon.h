@@ -28,12 +28,15 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 	FName TraitName = "";
 
+	// Brief description of what this hexagon can do.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Description;
-
+	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 	EHexagonType HexagonType;
-    
+
+	// This index represent the position of this Hexagon inside
+	// the HexSys character sheet UI.
 	UPROPERTY(VisibleDefaultsOnly)
 	int Index = 0;
 	
@@ -70,7 +73,7 @@ struct FHexsysQuality : public FHexsysHexagon
 	GENERATED_BODY()
 
 public:
-
+	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UHexsysQualitySystem> System;
 	

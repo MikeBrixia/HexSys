@@ -8,7 +8,7 @@
 
 class UHexsysAbilityWidget;
 /**
- * 
+ * Hexagon UI used to display and edit HexSys qualities.
  */
 UCLASS()
 class HEXSYS_API UHexsysQualityWidget : public UHexsysHexagonWidget
@@ -25,12 +25,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	FHexsysQuality Quality;
 
+	// Add a quality to the currently inspected asset.
 	UFUNCTION(BlueprintCallable)
 	void AddQuality(FHexsysQuality NewQuality);
 
+	// Update a quality on the currently inspected asset.
 	UFUNCTION(BlueprintCallable)
 	void UpdateQuality(FHexsysQuality NewQuality);
 
+	// Remove a quality on the currently inspected asset
 	UFUNCTION(BlueprintCallable)
 	void RemoveQuality(FName QualityToRemove);
 	

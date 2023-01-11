@@ -7,7 +7,7 @@
 #include "HexsysArchetypeWidget.generated.h"
 
 /**
- * 
+ * Hexagon UI used to display and edit HexSys archetypes.
  */
 UCLASS()
 class HEXSYS_API UHexsysArchetypeWidget : public UHexsysHexagonWidget
@@ -20,14 +20,18 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	FHexsysArchetype Archetype;
 
+	// Add a new archetype to the inspected asset.
 	UFUNCTION(BlueprintCallable)
 	void AddArchetype(FHexsysArchetype NewArchetype);
 
+	// Update the archetype on the inspected asset.
 	UFUNCTION(BlueprintCallable)
 	void UpdateArchetype(FHexsysArchetype NewArchetype);
 
+	// Remove the archetype on the inspected asset.
 	UFUNCTION(BlueprintCallable)
 	void RemoveArchetype();
 
+	// Initialize this widget
 	void OnInitialize(FHexsysHexagon* Hexagon) override;
 };

@@ -62,6 +62,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool ChangeArchetype(UHexsysArchetypeSystem* Archetype);
 
+	// Remove the current archetype from this HexSys character.
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
+	bool RemoveArchetype();
+	
 	// Add a quality to this HexSys character. Returns true if quality has been added, false otherwise.
 	// N.B. If quality already exists then this function will return false and fail, if you want to change an existing
 	// quality use 'ChangeQuality' instead.
@@ -72,6 +76,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool ChangeQuality(UHexsysQualitySystem* Quality, const FName OldQuality);
 
+	// Remove the current quality from this HexSys character.
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
+	bool RemoveQuality(FName Quality);
+	
 	// Add an ability to this HexSys character. Returns true if ability has been added, false otherwise.
 	// N.B. If the ability already exists then this function will return false and fail, if you want to change an existing
 	// ability use 'ChangeAbility' instead.
@@ -81,6 +89,9 @@ public:
 	// Change an ability of this HexSys character with a new one. Returns true if ability was changed, false otherwise
 	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
 	bool ChangeAbility(UHexsysAbilitySystem* Ability, const TArray<FName> ParentQualities, const FName OldAbility);
+
+	UFUNCTION(BlueprintCallable, Category="HexSys Character sheet")
+	bool RemoveAbility(FName Ability, TArray<FName> ParentQualities);
 	
 private:
 

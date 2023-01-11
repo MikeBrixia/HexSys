@@ -102,6 +102,18 @@ bool UHexsysSheetComponent::ChangeArchetype(UHexsysArchetypeSystem* Archetype)
 	return Result;
 }
 
+bool UHexsysSheetComponent::RemoveArchetype()
+{
+	bool CanRemove = Character != nullptr;
+	if(CanRemove)
+	{
+		const FName ArchetypeName = Character->SheetMappedHexagons.Find(0)->TraitName;
+		Systems.Remove(ArchetypeName);
+		Character->RemoveArchetype();
+	}
+	return CanRemove;
+}
+
 bool UHexsysSheetComponent::AddQuality(UHexsysQualitySystem* Quality, int SheetIndex)
 {
 	bool Result = Quality != nullptr && (Character != nullptr && Character->SheetMappedHexagons.Find(SheetIndex) == nullptr);
@@ -128,6 +140,17 @@ bool UHexsysSheetComponent::ChangeQuality(UHexsysQualitySystem* Quality, const F
 		Systems.Add(Quality->QualityData.TraitName, Quality);
 	}
 	return Result;
+}
+
+bool UHexsysSheetComponent::RemoveQuality(FName Quality)
+{
+	bool CanRemove = Character != nullptr;
+	if(Character != nullptr)
+	{
+		Systems.Remove(Quality);
+		Character->RemoveQuality(Quality);
+	}
+	return CanRemove;
 }
 
 bool UHexsysSheetComponent::AddAbility(UHexsysAbilitySystem* Ability, int SheetIndex, const TArray<FName> ParentQualities)
@@ -158,6 +181,17 @@ bool UHexsysSheetComponent::ChangeAbility(UHexsysAbilitySystem* Ability, const T
 		Character->ChangeCharacterAbility(Ability->AbilityData, ParentQualities, OldAbility);
 	}
 	return Result;
+}
+
+bool UHexsysSheetComponent::RemoveAbility(FName Ability, TArray<FName> ParentQualities)
+{
+	bool CanRemove = Character != nullptr;
+	if(CanRemove)
+	{
+		Systems.Remove(Ability);
+		Character->RemoveAbility(Ability, ParentQualities);
+	}
+	return CanRemove;
 }
 
 void UHexsysSheetComponent::LogWarning(EHexagonType Type)
