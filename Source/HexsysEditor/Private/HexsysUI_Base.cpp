@@ -28,7 +28,6 @@ void UHexsysUI_Base::InitializeHexsysWidget(UHexsysCharacter* Character)
 				HexagonWidget->OnTextUpdated(Hexagon->TraitName);
 			}
 		}
-		
 	}
 }
 

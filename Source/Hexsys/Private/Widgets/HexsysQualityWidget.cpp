@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Widgets/HexsysQualityWidget.h"
+#include "Hexsys.h"
 #include "HexsysCharacter.h"
 #include "Widgets/HexsysAbilityWidget.h"
 
@@ -10,6 +11,7 @@ void UHexsysQualityWidget::AddQuality(FHexsysQuality NewQuality)
 	for(const UHexsysAbilityWidget* AbilityWidget : LinkedAbilities)
 	{
 		const FHexsysAbility* Ability = &AbilityWidget->Ability;
+		UE_LOG(HexsysLog, Display, TEXT("%d"), Ability->Index);
 		if(IsValidTrait(Ability->TraitName))
 		    NewQuality.Abilities.Add(Ability->TraitName, *Ability);
 	}

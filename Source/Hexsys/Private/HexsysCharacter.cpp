@@ -70,16 +70,14 @@ void UHexsysCharacter::ChangeCharacterAbility(FHexsysAbility NewAbility, const T
 
 void UHexsysCharacter::AddAbility(FHexsysAbility NewAbility, int Index, TArray<FName> ParentQualities)
 {
+	SheetMappedHexagons.Add(Index, NewAbility);
 	// For each parent quality map the new ability to an HexSys sheet and add it
 	// to the quality abilities.
 	for (const FName& Parent : ParentQualities)
 	{
 		FHexsysQuality* _Quality = Qualities.Find(Parent);
 		if(_Quality != nullptr) // Ensure that the quality we're searching for actually exists.
-		{
-			SheetMappedHexagons.Add(Index, NewAbility);
 			_Quality->Abilities.Add(NewAbility.TraitName, NewAbility);
-		}
 	}
 }
 

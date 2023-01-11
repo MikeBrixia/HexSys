@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Widgets/HexsysAbilityWidget.h"
+#include "Hexsys.h"
 #include "Widgets/HexsysQualityWidget.h"
 
 void UHexsysAbilityWidget::AddAbility(FHexsysAbility NewAbility)
@@ -9,10 +10,8 @@ void UHexsysAbilityWidget::AddAbility(FHexsysAbility NewAbility)
 	
 	// When adding a new ability check if this widget has any linked qualities, if it does then build an array.
 	for (const UHexsysQualityWidget* Element : LinkedQualities)
-	{
 		if(Element != nullptr)
 			Qualities.Add(Element->Quality.TraitName);
-	}
 	
 	// Update ability and widget data.
 	NewAbility.Index = Index;
@@ -31,10 +30,8 @@ void UHexsysAbilityWidget::UpdateAbility(FHexsysAbility NewAbility)
 	// When updating an ability check if this widget has any linked qualities, if it does then build an array.
 	// this process is required because we need to update this ability in any linked quality.
 	for (const UHexsysQualityWidget* Element : this->LinkedQualities)
-	{
 		if(Element != nullptr)
 			Qualities.Add(Element->Quality.TraitName);
-	}
 	
 	// Update ability and widget data.
 	NewAbility.Index = Index;
@@ -55,6 +52,9 @@ void UHexsysAbilityWidget::RemoveAbility(FName AbilityName)
 	
 	// Remove ability.
 	HexsysCharacter->RemoveAbility(AbilityName, ParentQualities);
+	// These step is necessary to ensure ability removal even when
+	// both parent qualities are invalid.
+	HexsysCharacter->SheetMappedHexagons.Remove(Index);
 }
 
 void UHexsysAbilityWidget::OnInitialize(FHexsysHexagon* Hexagon)
@@ -65,15 +65,19 @@ void UHexsysAbilityWidget::OnInitialize(FHexsysHexagon* Hexagon)
 	if(_Ability != nullptr)
 		Ability = *_Ability;
     */
-
+	
 	// Workaround solution to initialize Ability data in the widget in case
-	// static_cast will not work
+	// static_cast will not work.
 	FName Quality = "None";
 	for(const UHexsysHexagonWidget* Widget : LinkedQualities)
 	{
-		Quality = HexsysCharacter->SheetMappedHexagons.Find(Widget->Index)->TraitName;
-		if(IsValidTrait(Quality))
-			break;
+		const FHexsysHexagon* QualityData = HexsysCharacter->SheetMappedHexagons.Find(Widget->Index);
+		if(QualityData != nullptr)
+		{
+			const FName QualityName = QualityData->TraitName;
+			if(IsValidTrait(QualityName))
+				break;
+		}
 	}
 	Ability = HexsysCharacter->GetCharacterAbility(Quality, Hexagon->TraitName);
 }
