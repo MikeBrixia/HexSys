@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Widgets/HexsysAbilityWidget.h"
-#include "Hexsys.h"
 #include "Widgets/HexsysQualityWidget.h"
 
 void UHexsysAbilityWidget::AddAbility(FHexsysAbility NewAbility)
