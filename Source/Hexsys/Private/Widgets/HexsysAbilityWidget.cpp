@@ -58,7 +58,7 @@ void UHexsysAbilityWidget::RemoveAbility(FName AbilityName)
 
 void UHexsysAbilityWidget::OnInitialize(FHexsysHexagon* Hexagon)
 {
-	// If static_cast works that's the best solution.
+	// Initialize the Ability data contained inside this widget.
 	const FHexsysAbility* _Ability = static_cast<FHexsysAbility*>(Hexagon);
 	if(_Ability != nullptr)
 		Ability = *_Ability;

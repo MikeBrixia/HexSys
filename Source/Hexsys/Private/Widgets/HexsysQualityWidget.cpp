@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Widgets/HexsysQualityWidget.h"
-#include "Hexsys.h"
 #include "HexsysCharacter.h"
 #include "Widgets/HexsysAbilityWidget.h"
 
