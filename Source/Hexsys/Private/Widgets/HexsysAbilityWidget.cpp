@@ -60,25 +60,8 @@ void UHexsysAbilityWidget::RemoveAbility(FName AbilityName)
 void UHexsysAbilityWidget::OnInitialize(FHexsysHexagon* Hexagon)
 {
 	// If static_cast works that's the best solution.
-	/*
 	const FHexsysAbility* _Ability = static_cast<FHexsysAbility*>(Hexagon);
 	if(_Ability != nullptr)
 		Ability = *_Ability;
-    */
-	
-	// Workaround solution to initialize Ability data in the widget in case
-	// static_cast will not work.
-	FName Quality = "None";
-	for(const UHexsysHexagonWidget* Widget : LinkedQualities)
-	{
-		const FHexsysHexagon* QualityData = HexsysCharacter->SheetMappedHexagons.Find(Widget->Index);
-		if(QualityData != nullptr)
-		{
-			const FName QualityName = QualityData->TraitName;
-			if(IsValidTrait(QualityName))
-				break;
-		}
-	}
-	Ability = HexsysCharacter->GetCharacterAbility(Quality, Hexagon->TraitName);
 }
 

@@ -21,7 +21,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<UHexsysAbilityWidget*> LinkedAbilities;
 
-	// Reference to the hexsys quality data contained inside this widget.
+	// Hexsys quality data contained inside this widget.
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	FHexsysQuality Quality;
 
