@@ -50,7 +50,7 @@ struct FHexsysArchetype : public FHexsysHexagon
 
 public:
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UHexsysArchetypeSystem> System;
 };
 
@@ -62,7 +62,7 @@ struct FHexsysAbility : public FHexsysHexagon
     
 public:
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UHexsysAbilitySystem> System;
 };
 
@@ -74,7 +74,7 @@ struct FHexsysQuality : public FHexsysHexagon
 
 public:
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UHexsysQualitySystem> System;
 	
 	/* The abilities linked to this quality*/
