@@ -18,21 +18,13 @@ class HEXSYS_API UHexsysHexagonWidget : public UUserWidget
 public:
 	
 	UPROPERTY(BlueprintReadOnly)
-	UHexsysCharacter* HexsysCharacter = nullptr;
+	UHexsysCharacter* HexsysCharacter;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int Index = 0;
-
-	UPROPERTY(BlueprintReadOnly)
-	FName Text;
-
-	UFUNCTION(BlueprintImplementableEvent)
-    void OnTextUpdated(FName UpdatedText);
-	
-	virtual void OnInitialize(FHexsysHexagon* Hexagon);
 	
 protected:
-
+	
 	// When trait name is "None" the trait will be considered invalid.
 	const FName INVALID_TRAIT = "None";
 
@@ -41,7 +33,10 @@ protected:
 	
 	// Check if a trait is valid.
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE bool IsValidTrait(FName TraitName) const { return TraitName != INVALID_TRAIT && TraitName != INVALID_TRAIT_1; }
+	FORCEINLINE bool IsValidTrait(FName TraitName) const
+	{
+		return TraitName != INVALID_TRAIT && TraitName != INVALID_TRAIT_1;
+	}
 };
 
 

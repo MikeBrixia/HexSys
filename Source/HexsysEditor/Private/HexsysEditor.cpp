@@ -10,7 +10,6 @@ void FHexsysEditorModule::StartupModule()
 	{
 		Asset = MakeShared<FHexsysCharacterAssetTypeAction>();
 		FAssetToolsModule::GetModule().Get().RegisterAssetTypeActions(Asset.ToSharedRef());
-		UE_LOG(LogTemp, Display, TEXT("Hexsys editor loaded"));
 	}
 }
 
