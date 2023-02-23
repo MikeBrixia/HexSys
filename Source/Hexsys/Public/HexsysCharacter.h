@@ -6,8 +6,9 @@
 #include "Hexagons/HexsysHexagon.h"
 #include "HexsysCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTraitUpdated, FHexsysHexagon, NewTrait);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTraitRemoved, FHexsysHexagon, NewTrait);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTraitUpdated, FHexsysHexagon, UpdatedTrait);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTraitRemoved, FHexsysHexagon, RemovedTrait);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTraitAdded, FHexsysHexagon, NewTrait);
 
 class UHexsysTrait;
 /**
@@ -37,6 +38,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnTraitRemoved OnTraitRemoved;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnTraitRemoved OnTraitAdded;
+	
 	/* Add a new trait to this Hexsys character. */
 	UFUNCTION(BlueprintCallable, Category="HexSys")
 	void AddTrait(FHexsysHexagon Trait);
@@ -92,5 +96,17 @@ public:
 	{
 		return TraitName != "None" && !TraitName.IsNone();
 	}
+
+private:
+
+	// Is the given index a valid HexSys sheet index?.
+	// HexSys hexagons are 19, going from 0 to 18.
+	// N.B. if a HexSys hexagon/trait has a index of -1, it means
+	// that it's invalid or none.
+	static FORCEINLINE bool IsValidSheetIndex(int Index)
+	{
+		return Index >= 0 && Index <= 18;
+	}
+	
 };
 
