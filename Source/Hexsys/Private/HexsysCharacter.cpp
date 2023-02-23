@@ -109,7 +109,7 @@ void UHexsysCharacter::UpdateChildTrait(TArray<FName> ParentTraits, FHexsysHexag
 void UHexsysCharacter::RemoveTrait(FName TraitName)
 {
 	const FHexsysHexagon Trait = GetCharacterTrait(TraitName);
-	if (IsValidSheetIndex(Trait.SheetIndex && IsValidTrait(Trait.Name)))
+	if (IsValidSheetIndex(Trait.SheetIndex) && IsValidTrait(Trait.Name))
 	{
 		SheetMappedTraits[Trait.SheetIndex] = FHexsysHexagon();
 		Traits.Remove(TraitName);
